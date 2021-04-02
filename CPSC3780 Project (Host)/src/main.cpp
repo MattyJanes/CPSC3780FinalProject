@@ -1,13 +1,14 @@
 #include "SimpleHeader.h"
 #include <iostream>
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
-#include <ws2tcpip.h>
+#include <Ws2tcpip.h>
+#include <winsock2.h>
 
 #pragma comment (lib, "ws2_32.lib")
 
 using namespace std;
 
-void main()
+int main()
 {
 	string exampleAddress = "127.0.0.1";
 	//Start Winsock and bind socket to ipv4 and port then loop
@@ -16,7 +17,7 @@ void main()
 	int winsock0k = WSAStartup(version, &data);
 	if (winsock0k != 0) {
 		cerr << "Unable to start Winsock." << winsock0k;
-		return;
+		return 0;
 	}
 
 	SOCKET inSocket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -27,7 +28,7 @@ void main()
 
 	if (bind(inSocket, (sockaddr*)&serverClue, sizeof(serverClue)) == SOCKET_ERROR) {
 		cerr << "Unable to bind socket." << WSAGetLastError() << endl;
-		return;
+		return 0;
 	}
 
 	sockaddr_in clientAddress;

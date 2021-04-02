@@ -2,6 +2,7 @@
 #define __SIMPLEHEADER_H
 
 #include <cstdint>
+#include <string>
 #define DATA_SZ 512
 
 using namespace std;
