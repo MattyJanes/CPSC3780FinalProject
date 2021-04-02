@@ -38,6 +38,14 @@ unsigned int SimpleHeader::getTR() const {
   return packet.TR;
 }
 
+void SimpleHeader::setSeqnum(unsigned int val) {
+  packet.seq_Num = val;
+}
+
+unsigned int SimpleHeader::getSeqnum() const {
+  return packet.seq_Num;
+}
+
 void SimpleHeader::setTimestamp(unsigned int val) {
   packet.Timestamp = val;
 }
@@ -55,3 +63,28 @@ unsigned int SimpleHeader::getCRC1() const {
   return packet.crc1_lsb | (packet.crc1_msb<<16);
 }
 
+void SimpleHeader::setCRC2(unsigned int val) {
+  packet.crc1_msb = (val>>16); // shift the integer to right by 16 bits to get the msb
+  packet.crc1_lsb = (val&0x0000FFFF); // bitwise AND with 16 LSB bits set to 1.
+}
+
+unsigned int SimpleHeader::getCRC2() const {
+  return packet.crc1_lsb | (packet.crc1_msb<<16);
+}
+
+string SimpleHeader::convertPacketToString() {
+  string dataString = "";
+  string payload(packet.data);
+
+  dataString.append(to_string(getType()));
+  dataString.append(to_string(getTR()));
+  dataString.append(to_string(getWindow()));
+  dataString.append(to_string(getSeqnum()));
+  dataString.append(to_string(getHeader()));
+  dataString.append(to_string(getTimestamp()));
+  dataString.append(to_string(getCRC1()));
+  dataString.append(payload);
+  dataString.append(to_string(getCRC2()));
+
+  return dataString;
+}

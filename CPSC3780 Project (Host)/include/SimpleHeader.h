@@ -4,6 +4,8 @@
 #include <cstdint>
 #define DATA_SZ 512
 
+using namespace std;
+
 struct simplepacket {
   uint8_t Type:2;
   uint8_t TR:1;
@@ -15,8 +17,8 @@ struct simplepacket {
   uint16_t crc1_msb;
   uint16_t crc1_lsb;
   char data[DATA_SZ];  // payload
-  //uint8_t crc2_msb;
-  //uint8_t crc2_lsb;
+  uint8_t crc2_msb;
+  uint8_t crc2_lsb;
 };
 
 // class to be tested. Implements a simple packet structure consisting of a 16 bit integer + data
@@ -33,34 +35,39 @@ public:
 
   // returns the header value
   unsigned int getHeader() const;
-  
+
   // set the type field
   void setType(unsigned int val);
-  
-  
+
+
   // return the Type Field
   unsigned int getType() const;
 
 
 	// set the Window field
   void setWindow(unsigned int val);
-  
-  
+
+
   // return the Window Field
   unsigned int getWindow() const;
 
   // set the TR field
   void setTR(unsigned int val);
-  
-  
+
+
   // return the TR Field
   unsigned int getTR() const;
-  
-  
+
+  //set the seqnum
+  void setSeqnum(unsigned int val);
+
+  //return the seqnum
+  unsigned int getSeqnum() const;
+
    // set the TR field
   void setTimestamp(unsigned int val);
-  
-  
+
+
   // return the TR Field
   unsigned int getTimestamp() const;
 
@@ -69,9 +76,16 @@ public:
 
   // returns the header value
   unsigned int getCRC1() const;
-  
+
+  // sets the 16 bit value of the header
+   void setCRC2(unsigned int val);
+
+   // returns the header value
+   unsigned int getCRC2() const;
 
 
+  //converts packet to string
+  string convertPacketToString();
 
 
   // returns the size of the packet, including headers and data
