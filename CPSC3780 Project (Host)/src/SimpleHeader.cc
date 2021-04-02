@@ -88,3 +88,42 @@ string SimpleHeader::convertPacketToString() {
 
   return dataString;
 }
+
+void SimpleHeader::processString(string input) {
+  unsigned int index = 0;
+
+  string type = input.substr(index, 2);
+  index += 2;
+  setType(stoul(type, nullptr, 0));
+
+  string tr = input.substr(index, 1);
+  index += 1;
+  setTR(stoul(tr, nullptr, 0));
+
+  string window = input.substr(index, 5);
+  index += 5;
+  setWindow(stoul(window, nullptr, 0));
+
+  string seqnum = input.substr(index, 8);
+  index += 8;
+  setSeqnum(stoul(seqnum, nullptr, 0));
+
+  string length = input.substr(index, 16);
+  index += 16;
+  setHeader(stoul(length, nullptr, 0));
+
+  string timestamp = input.substr(index, 32);
+  index += 32;
+  setTimestamp(stoul(timestamp, nullptr, 0));
+
+  string crc1 = input.substr(index, 32);
+  index += 32;
+  setCRC1(stoul(crc1, nullptr, 0));
+
+  string payload = input.substr(index, 4096);
+  index += 4096;
+  packet.data = payload;
+
+  string crc2 = input.substr(index, 32);
+  setCRC2(stoul(crc2, nullptr, 0));
+}

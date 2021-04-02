@@ -87,6 +87,9 @@ public:
   //converts packet to string
   string convertPacketToString();
 
+  //converts string into packetSize
+  void processString(string input);
+
 
   // returns the size of the packet, including headers and data
   // to be used with recvfrom() or sendto()
